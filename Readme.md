@@ -1,7 +1,7 @@
 # Личный проект «Readme»
 
 * Студент: [Viktor Lugovskoy](https://up.htmlacademy.ru/php/12/user/1571909).
-* Наставник: `Неизвестно`.
+* Наставник: [Артем Комаров](https://https://htmlacademy.ru/profile/id1410933).
 
 ---
 
