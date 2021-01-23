@@ -128,7 +128,7 @@
                             </div>
                             <div class="post__info">
                                 <b class="post__author-name"><?= htmlspecialchars($post['username']); ?></b>
-                                <time class="post__time" datetime="">дата</time>
+                                <time class="post__time" datetime="<?= htmlspecialchars($post['date']) ?>" title="<?= htmlspecialchars(date('d.m.Y H:i', strtotime($post['date']))) ?>"><?php htmlspecialchars(time_passed($post['date'])) ?></time>
                             </div>
                         </a>
                     </div>
