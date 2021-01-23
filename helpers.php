@@ -284,7 +284,7 @@ function time_passed($original_date)
     $create_date = date_create($original_date);
     $date_difference = date_diff($current_date, $create_date);
     $seconds_difference = date_timestamp_get($current_date) - date_timestamp_get($create_date);
-
+    /* Version 1
     if ($seconds_difference >= 3024000) {
         $date_unit = $date_difference -> m;
         $date_noun = get_noun_plural_form($date_unit, 'месяц', 'месяца', 'месяцев');
@@ -301,5 +301,26 @@ function time_passed($original_date)
         $date_unit = $date_difference -> i;
         $date_noun = get_noun_plural_form($date_unit, 'минута', 'минуты', 'минут');
     }
-    return print_r("$date_unit $date_noun назад");
+    return print_r("$date_unit $date_noun назад"); */
+
+    if ($date_difference -> y > 0) {
+        $date_unit = $date_difference -> y;
+        $date_noun = get_noun_plural_form($date_unit, 'год', 'года', 'лет');
+    } elseif ($date_difference -> m > 0) {
+        $date_unit = $date_difference->m;
+        $date_noun = get_noun_plural_form($date_unit, 'месяц', 'месяца', 'месяцев');
+    } elseif ($date_difference -> d > 7) {
+        $date_unit = intdiv($date_difference -> days, 7);
+        $date_noun = get_noun_plural_form($date_unit, 'неделя', 'недели', 'недель');
+    } elseif ($date_difference -> d > 0) {
+        $date_unit = $date_difference -> d;
+        $date_noun = get_noun_plural_form($date_unit, 'день', 'дня', 'дней');
+    } elseif ($date_difference -> h > 0) {
+        $date_unit = $date_difference -> h;
+        $date_noun = get_noun_plural_form($date_unit, 'час', 'часа', 'часов');
+    } else {
+        $date_unit = $date_difference -> i;
+        $date_noun = get_noun_plural_form($date_unit, 'минута', 'минуты', 'минут');
+    }
+    return $date_unit." ".$date_noun." назад";
 }
