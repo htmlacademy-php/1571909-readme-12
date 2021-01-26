@@ -5,41 +5,63 @@ $user_name = 'Viktor Lugovskoy'; // укажите здесь ваше имя
 
 $posts = [
     [
-    'header' => 'Цитата',
-    'type' => 'post-quote',
-    'content' => 'Мы в жизни любим только раз, а после ищем лишь похожих',
-    'username' =>'Лариса',
-    'avatar' =>'userpic-larisa-small.jpg'
+        'header' => 'Цитата',
+        'type' => 'post-quote',
+        'content' => 'Мы в жизни любим только раз, а после ищем лишь похожих',
+        'username' => 'Лариса',
+        'avatar' => 'userpic-larisa-small.jpg'
     ],
     [
-    'header' => 'Игра престолов',
-    'type' => 'post-text',
-    'content' => 'Не могу дождаться начала финального сезона своего любимого сериала!',
-    'username' =>'Владик',
-    'avatar' =>'userpic.jpg'
+        'header' => 'Игра престолов',
+        'type' => 'post-text',
+        'content' => 'Не могу дождаться начала финального сезона своего любимого сериала!',
+        'username' => 'Владик',
+        'avatar' => 'userpic.jpg'
     ],
     [
-    'header' => 'Наконец, обработал фотки!',
-    'type' => 'post-photo',
-    'content' => 'rock-medium.jpg',
-    'username' =>'Виктор',
-    'avatar' =>'userpic-mark.jpg'
+        'header' => 'Наконец, обработал фотки!',
+        'type' => 'post-photo',
+        'content' => 'rock-medium.jpg',
+        'username' => 'Виктор',
+        'avatar' => 'userpic-mark.jpg'
     ],
     [
-    'header' => 'Моя мечта',
-    'type' => 'post-photo',
-    'content' => 'coast-medium.jpg',
-    'username' =>'Лариса',
-    'avatar' =>'userpic-larisa-small.jpg'
+        'header' => 'Моя мечта',
+        'type' => 'post-photo',
+        'content' => 'coast-medium.jpg',
+        'username' => 'Лариса',
+        'avatar' => 'userpic-larisa-small.jpg'
     ],
     [
-    'header' => 'Лучшие курсы',
-    'type' => 'post-link',
-    'content' => 'www.htmlacademy.ru',
-    'username' =>'Владик',
-    'avatar' =>'userpic.jpg'
+        'header' => 'Лучшие курсы',
+        'type' => 'post-link',
+        'content' => 'www.htmlacademy.ru',
+        'username' => 'Владик',
+        'avatar' => 'userpic.jpg'
+    ],
+    [
+        'header' => 'Полезный пост про Байкал',
+        'type' => 'post-text',
+        'content' => 'Озеро Байкал – огромное древнее озеро в горах Сибири к северу от монгольской границы. Байкал считается самым глубоким озером в мире. Он окружен сетью пешеходных маршрутов, называемых Большой байкальской тропой. Деревня Листвянка, расположенная на западном берегу озера, – популярная отправная точка для летних экскурсий. Зимой здесь можно кататься на коньках и собачьих упряжках.',
+        'username' => 'Лариса Роговая',
+        'avatar' => 'userpic-larisa-small.jpg'
     ]
-]
+];
+
+function cut_Text(string $longText, int $maxLength = 300){
+    if (mb_strlen($longText) <= $maxLength) {
+        return $longText;
+    }
+    $longText = explode(' ', $longText);
+    $currentLength = 0;
+    $counter = 0;
+    while ($currentLength <= $maxLength) {
+        $word = $longText[$counter++];
+        $currentLength += (mb_strlen($word) + 1);
+    }
+    return implode(' ', array_slice($longText, 0, $counter - 1)) . '...';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -311,47 +333,50 @@ $posts = [
                 </div>
             </div>
             <div class="popular__posts">
-                <?php foreach ($posts as $post):?>
-                    <article class="popular__post post <?= $post['type']?>">
+                <?php foreach ($posts as $post) : ?>
+                    <article class="popular__post post <?= $post['type'] ?>">
                         <header class="post__header">
-                            <h2><?=$post['header']?></h2>
+                            <h2><?= $post['header'] ?></h2>
                         </header>
                         <div class="post__main">
-                            <?php if ($post['type']==='post-quote'):?>
+                            <?php if ($post['type'] === 'post-quote') : ?>
                                 <blockquote>
-                                    <p><?=$post['content']?></p>
+                                    <p><?= $post['content'] ?></p>
                                     <cite>Неизвестный Автор</cite>
                                 </blockquote>
-                            <?php elseif($post['type']==='post-link'):?>
+                            <?php elseif ($post['type'] === 'post-link') : ?>
                                 <div class="post-link__wrapper">
-                                    <a class="post-link__external" href="http://<?=$post['content']?>" title="Перейти по ссылке">
+                                    <a class="post-link__external" href="http://<?= $post['content'] ?>" title="Перейти по ссылке">
                                         <div class="post-link__info-wrapper">
                                             <div class="post-link__icon-wrapper">
                                                 <img src="https://www.google.com/s2/favicons?domain=vitadental.ru" alt="Иконка">
                                             </div>
                                             <div class="post-link__info">
-                                                <h3><?=$post['header']?></h3>
+                                                <h3><?= $post['header'] ?></h3>
                                             </div>
                                         </div>
-                                        <span><?=$post['content']?></span>
+                                        <span><?= $post['content'] ?></span>
                                     </a>
                                 </div>
-                            <?php elseif($post['type']==='post-photo'):?>
+                            <?php elseif ($post['type'] === 'post-photo') : ?>
                                 <div class="post-photo__image-wrapper">
-                                    <img src="img/<?=$post['content']?>" alt="Фото от пользователя" width="360" height="240">
+                                    <img src="img/<?= $post['content'] ?>" alt="Фото от пользователя" width="360" height="240">
                                 </div>
-                            <?php else:?>
-                                <p><?=$post['content']?></p>
+                            <?php else : ?>
+                                <p><?=cut_Text($post['content'])?></p>
+                                <?php if (cut_Text($post['content'])!=$post['content']):?>
+                                    <a class="post-text__more-link" href="#">Читать далее</a>
+                                <?php endif ?>
                             <?php endif ?>
                         </div>
                         <footer class="post__footer">
                             <div class="post__author">
                                 <a class="post__author-link" href="#" title="Автор">
                                     <div class="post__avatar-wrapper">
-                                        <img class="post__author-avatar" src="img/<?=$post['avatar']?>" alt="Аватар пользователя">
+                                        <img class="post__author-avatar" src="img/<?= $post['avatar'] ?>" alt="Аватар пользователя">
                                     </div>
                                     <div class="post__info">
-                                        <b class="post__author-name"><?=$post['username']?></b>
+                                        <b class="post__author-name"><?= $post['username'] ?></b>
                                         <time class="post__time" datetime="">дата</time>
                                     </div>
                                 </a>
@@ -379,7 +404,7 @@ $posts = [
                             </div>
                         </footer>
                     </article>
-                <?php endforeach?>
+                <?php endforeach ?>
             </div>
         </div>
     </section>
